@@ -1,0 +1,2082 @@
+schema {
+  query: Queries
+  mutation: Mutations
+}
+
+"""
+An authorization result
+"""
+type Authorization {
+  """
+  Access token
+  """
+  accessToken: String
+
+  """
+  Access token expiration time
+  """
+  accessTokenExpiresAt: Float
+
+  """
+  Refresh token
+  """
+  refreshToken: String
+
+  """
+  Refresh token expiration time
+  """
+  refreshTokenExpiresAt: Float
+
+  """
+  Scope of the token
+  """
+  scope: String
+}
+
+"""
+Brand type of a pion
+"""
+type BrandPion implements Pion {
+  """
+  ID
+  """
+  id: ID
+
+  """
+  Pion type
+  """
+  type: PionTypes
+
+  """
+  Cards IDs, which cards this pion belongs to
+  """
+  cards: [Card]
+
+  """
+  Home ID, which home this pion belongs to
+  """
+  home: ID
+
+  """
+  User ID, which user this pion belongs to
+  """
+  owner: ID
+
+  """
+  Fields related to the Pion, differs between types.
+  """
+  payload: JSON
+
+  """
+  Title of the pion
+  """
+  title: String
+
+  """
+  Brand name of the brand
+  """
+  brand: String
+
+  """
+  The model of the brand
+  """
+  model: String
+
+  """
+  The info of the product
+  """
+  productInfo: String
+
+  """
+  The serial number of the product
+  """
+  serial: String
+
+  """
+  The product photo
+  """
+  productPhoto: ImageFile
+
+  """
+  Created date
+  """
+  createdAt: DateTime
+
+  """
+  Updated date
+  """
+  updatedAt: DateTime
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar DateTime
+
+"""
+A card
+"""
+type Card {
+  """
+  ID
+  """
+  id: ID
+
+  """
+  Card title
+  """
+  title: String
+
+  """
+  Description of content inside card
+  """
+  subtitle: String
+
+  """
+  Home ID, which home this card belongs to
+  """
+  home: ID
+
+  """
+  User ID, which user this card belongs to
+  """
+  owner: ID
+
+  """
+  Created date
+  """
+  createdAt: DateTime
+
+  """
+  Updated date
+  """
+  updatedAt: DateTime
+
+  """
+  The URL to placeholder image
+  """
+  placeholderImage: String
+
+  """
+  Card image
+  """
+  image: ImageFile
+
+  """
+  Tags of the card
+  """
+  tags: [Card]
+}
+
+type Cards {
+  items: [Card]
+  count: Int
+  hasNextPage: Boolean
+}
+
+"""
+A file
+"""
+interface File {
+  """
+  ID
+  """
+  id: ID
+
+  """
+  Which home this file is related to
+  """
+  home: ID
+
+  """
+  Size of file in bytes
+  """
+  size: Int
+
+  """
+  Mimetype of file (ex. image/jpeg)
+  """
+  mime: String
+
+  """
+  The filename it was uploaded as
+  """
+  name: String
+
+  """
+  Fields related to the File, differs between types.
+  """
+  payload: JSON
+
+  """
+  Direct URL to the file.
+  """
+  url: String
+}
+
+"""
+A home
+"""
+type Home {
+  """
+  ID
+  """
+  id: ID
+
+  """
+  Home title
+  """
+  title: String
+
+  """
+  Home type
+  """
+  type: String
+
+  """
+  Home image
+  """
+  image: ImageFile
+
+  """
+  Home images
+  """
+  images: [ImageFile]
+
+  """
+  Home owner
+  """
+  owner: User
+
+  """
+  Home users
+  """
+  users: [User]
+
+  """
+  Language
+  """
+  language: String
+
+  """
+  addressLine1
+  """
+  addressLine1: String
+
+  """
+  addressLine2
+  """
+  addressLine2: String
+
+  """
+  zipCode
+  """
+  zipCode: String
+
+  """
+  city
+  """
+  city: String
+
+  """
+  country
+  """
+  country: String
+
+  """
+  countryISO
+  """
+  countryISO: String
+
+  """
+  Latitude
+  """
+  lat: String
+
+  """
+  Longitude
+  """
+  lon: String
+
+  """
+  municipality
+  """
+  municipality: String
+
+  """
+  municipality details
+  """
+  municipalityDetails: JSON
+
+  """
+  apartmentNumber
+  """
+  apartmentNumber: Int
+
+  """
+  ownershipType
+  """
+  ownershipType: String
+
+  """
+  ownershipTiming
+  """
+  ownershipTiming: JSON
+
+  """
+  propertyName
+  """
+  propertyName: String
+
+  """
+  peopleInHome
+  """
+  peopleInHome: Boolean
+
+  """
+  buildingSociety
+  """
+  buildingSociety: String
+  settings: HomeSettings
+  basicInfo: HomeBasicInfo
+  property: HomeProperty
+  buildingSocietyInfo: HomeBuildingSocietyInfo
+  roomsAndFloors: HomeRoomsAndFloors
+  construction: HomeConstruction
+  electricity: HomeElectricity
+  heatingAndCooling: HomeHeatingAndCooling
+  waterAndSewer: HomeWaterAndSewer
+  securityAndInsurance: HomeSecurityAndInsurance
+  mortgage: HomeMortgage
+  valuation: [HomeValuation]
+}
+
+"""
+Home valuation info
+"""
+type HomeValuation {
+  """
+  Purchase price
+  """
+  purchasePrice: ValueWithUnit
+
+  """
+  Purchase date
+  """
+  purchaseDate: DateWithGranularity
+}
+
+"""
+Value with unit
+"""
+type ValueWithUnit {
+  """
+  Value
+  """
+  value: Int
+
+  """
+  Unit of value
+  """
+  unit: String
+}
+
+type DateWithGranularity {
+  date: String
+  granularity: String
+}
+
+"""
+Note type of a pion
+"""
+type NotePion implements Pion {
+  """
+  ID
+  """
+  id: ID
+
+  """
+  Pion type
+  """
+  type: PionTypes
+
+  """
+  Cards IDs, which cards this pion belongs to
+  """
+  cards: [Card]
+
+  """
+  Home ID, which home this pion belongs to
+  """
+  home: ID
+
+  """
+  User ID, which user this pion belongs to
+  """
+  owner: ID
+
+  """
+  User which created the pion
+  """
+  createdBy: User
+
+  """
+  Fields related to the Pion, differs between types.
+  """
+  payload: JSON
+
+  """
+  Title of the note
+  """
+  title: String
+
+  """
+  Content of the note
+  """
+  content: String
+
+  """
+  Files of the content of the rich editor
+  """
+  files: [ImageFile]
+
+  """
+  Created date
+  """
+  createdAt: DateTime
+
+  """
+  Updated date
+  """
+  updatedAt: DateTime
+}
+
+"""
+PDF type of a pion
+"""
+type PDFPion implements Pion {
+  """
+  ID
+  """
+  id: ID
+
+  """
+  Pion type
+  """
+  type: PionTypes
+
+  """
+  Cards IDs, which cards this pion belongs to
+  """
+  cards: [Card]
+
+  """
+  Home ID, which home this pion belongs to
+  """
+  home: ID
+
+  """
+  User ID, which user this pion belongs to
+  """
+  owner: ID
+
+  """
+  Title
+  """
+  title: String
+
+  """
+  Fields related to the Pion, differs between types.
+  """
+  payload: JSON
+
+  """
+  The uploaded PDF
+  """
+  file: PDFFile
+
+  """
+  Source document name
+  """
+  documentName: String
+
+  """
+  Scanned flag
+  """
+  scanned: Boolean
+
+  """
+  Created date
+  """
+  createdAt: DateTime
+
+  """
+  Updated date
+  """
+  updatedAt: DateTime
+}
+
+"""
+A PDF file
+"""
+type PDFFile implements File {
+  """
+  ID
+  """
+  id: ID
+
+  """
+  Which home this file is related to
+  """
+  home: ID
+
+  """
+  Size of file in bytes
+  """
+  size: Int
+
+  """
+  Mimetype of file (ex. image/jpeg)
+  """
+  mime: String
+
+  """
+  The filename it was uploaded as
+  """
+  name: String
+
+  """
+  Fields related to the File, differs between types.
+  """
+  payload: JSON
+
+  """
+  Number of pages
+  """
+  pages: Int
+
+  """
+  Direct URL to the file.
+  """
+  url: String
+
+  """
+  Tiny thumbnail url
+  """
+  tinyUrl: String
+
+  """
+  Small thumbnail url
+  """
+  smallUrl: String
+
+  """
+  Medium thumbnail url
+  """
+  mediumUrl: String
+
+  """
+  Large thumbnail url
+  """
+  largeUrl: String
+}
+
+"""
+An image file
+"""
+type ImageFile implements File {
+  """
+  ID
+  """
+  id: ID
+
+  """
+  Which home this file is related to
+  """
+  home: ID
+
+  """
+  Size of file in bytes
+  """
+  size: Int
+
+  """
+  Mimetype of file (ex. image/jpeg)
+  """
+  mime: String
+
+  """
+  The filename it was uploaded as
+  """
+  name: String
+
+  """
+  Fields related to the File, differs between types.
+  """
+  payload: JSON
+
+  """
+  Image width
+  """
+  width: Int
+
+  """
+  Image height
+  """
+  height: Int
+
+  """
+  Caption for the image
+  """
+  caption: String
+
+  """
+  Description for the image
+  """
+  description: String
+
+  """
+  Direct URL to the file.
+  """
+  url: String
+
+  """
+  Tiny thumbnail url
+  """
+  tinyUrl: String
+
+  """
+  Small thumbnail url
+  """
+  smallUrl: String
+
+  """
+  Medium thumbnail url
+  """
+  mediumUrl: String
+
+  """
+  Large thumbnail url
+  """
+  largeUrl: String
+}
+
+"""
+Photo type of a pion
+"""
+type PhotoPion implements Pion {
+  """
+  ID
+  """
+  id: ID
+
+  """
+  Pion type
+  """
+  type: PionTypes
+
+  """
+  Title
+  """
+  title: String
+
+  """
+  Cards IDs, which cards this pion belongs to
+  """
+  cards: [Card]
+
+  """
+  Home ID, which home this pion belongs to
+  """
+  home: ID
+
+  """
+  User ID, which user this pion belongs to
+  """
+  owner: ID
+
+  """
+  Fields related to the Pion, differs between types.
+  """
+  payload: JSON
+
+  """
+  Photos related to the Pion
+  """
+  photos: [ImageFile]
+
+  """
+  Created date
+  """
+  createdAt: DateTime
+
+  """
+  Updated date
+  """
+  updatedAt: DateTime
+}
+
+"""
+Piece of Information type
+"""
+interface Pion {
+  """
+  ID
+  """
+  id: ID
+
+  """
+  Pion type
+  """
+  type: PionTypes
+
+  """
+  Cards IDs, which cards this pion belongs to
+  """
+  cards: [Card]
+
+  """
+  Home ID, which home this pion belongs to
+  """
+  home: ID
+
+  """
+  Which user created the pion
+  """
+  owner: ID
+
+  """
+  Fields related to the Pion, differs between types.
+  """
+  payload: JSON
+
+  """
+  Created date
+  """
+  createdAt: DateTime
+
+  """
+  Updated date
+  """
+  updatedAt: DateTime
+}
+
+enum PionTypes {
+  """
+  A Pion of type Note
+  """
+  note
+
+  """
+  A Pion of type Brand
+  """
+  brand
+
+  """
+  A Pion of type Photo
+  """
+  photo
+
+  """
+  A Pion of type URL
+  """
+  url
+
+  """
+  A pion containing a PDF
+  """
+  pdf
+}
+
+"""
+URL type of a pion
+"""
+type UrlPion implements Pion {
+  """
+  ID
+  """
+  id: ID
+
+  """
+  Pion type
+  """
+  type: PionTypes
+
+  """
+  Cards IDs, which cards this pion belongs to
+  """
+  cards: [Card]
+
+  """
+  Home ID, which home this pion belongs to
+  """
+  home: ID
+
+  """
+  User ID, which user this pion belongs to
+  """
+  owner: ID
+
+  """
+  Fields related to the Pion, differs between types.
+  """
+  payload: JSON
+
+  """
+  Full URL
+  """
+  url: String
+
+  """
+  Title for the pion
+  """
+  title: String
+
+  """
+  Title of the URL destination
+  """
+  urlTitle: String
+
+  """
+  URL to the preview image (OG)
+  """
+  preview: String
+
+  """
+  URL to the favicon
+  """
+  favicon: String
+
+  """
+  Created date
+  """
+  createdAt: DateTime
+
+  """
+  Updated date
+  """
+  updatedAt: DateTime
+}
+
+"""
+Task item
+"""
+type Task {
+  """
+  ID
+  """
+  id: ID
+
+  """
+  type
+  """
+  type: String
+
+  """
+  title
+  """
+  title: String
+
+  """
+  Description of task
+  """
+  description: String
+
+  """
+  Owner user of this task
+  """
+  owner: User
+
+  """
+  Home ID, which home this task belongs to
+  """
+  home: Home
+
+  """
+  Tasks list ID
+  """
+  tasksList: ID
+
+  """
+  Array of cards
+  """
+  cards: [Card]
+
+  """
+  Fields related to the task, differs between types.
+  """
+  payload: JSON
+
+  """
+  Order of task in the card
+  """
+  order: Int
+
+  """
+  Previous task in the list of ones in the tasks list
+  """
+  prevTask: ID
+
+  """
+  State of task
+  """
+  done: Boolean
+
+  """
+  Due date
+  """
+  dueDate: DateTime
+
+  """
+  CRON expression for repeat interval
+  """
+  repeatInterval: String
+
+  """
+  An option point of a reminder
+  """
+  reminder: String
+
+  """
+  Created date
+  """
+  createdAt: DateTime
+
+  """
+  Updated date
+  """
+  updatedAt: DateTime
+}
+
+"""
+A tasks list
+"""
+type TasksList {
+  """
+  ID
+  """
+  id: ID
+
+  """
+  type
+  """
+  type: String
+
+  """
+  title
+  """
+  title: String
+
+  """
+  Description of the list
+  """
+  description: String
+
+  """
+  Home ID, which home this tasks list belongs to
+  """
+  home: Home
+
+  """
+  Owner user of this tasks list
+  """
+  owner: User
+
+  """
+  List of the related tasks
+  """
+  tasks: [Task]
+
+  """
+  Color of the list
+  """
+  color: String
+
+  """
+  Icon of the list
+  """
+  icon: String
+
+  """
+  Custom icon of the list
+  """
+  image: ImageFile
+
+  """
+  Fields related to the Pion, differs between types.
+  """
+  payload: JSON
+
+  """
+  Created date
+  """
+  createdAt: DateTime
+
+  """
+  Updated date
+  """
+  updatedAt: DateTime
+}
+
+"""
+A user
+"""
+type User {
+  """
+  ID
+  """
+  id: ID
+
+  """
+  User role
+  """
+  role: Float
+
+  """
+  Firstname
+  """
+  firstName: String
+
+  """
+  Lastname
+  """
+  lastName: String
+
+  """
+  E-mail
+  """
+  email: String
+
+  """
+  User's image
+  """
+  image: ImageFile
+
+  """
+  Language
+  """
+  language: String
+}
+
+type HomeBasicInfo {
+  """
+  home type
+  """
+  homeType: String
+
+  """
+  Ownership type
+  """
+  ownership: String
+
+  """
+  home usage type
+  """
+  usage: String
+
+  """
+  Part of a society / community
+  """
+  partOfSociety: Boolean
+}
+
+input HomeBasicInfoInput {
+  """
+  home type
+  """
+  homeType: String
+
+  """
+  Ownership type
+  """
+  ownership: String
+
+  """
+  home usage type
+  """
+  usage: String
+
+  """
+  Part of a society / community
+  """
+  partOfSociety: Boolean
+}
+
+"""
+Home building society information
+"""
+type HomeBuildingSocietyInfo {
+  """
+  Society name
+  """
+  societyName: String
+
+  """
+  Society number
+  """
+  societyNumber: String
+
+  """
+  Society website
+  """
+  societyURL: String
+}
+
+"""
+Home building society information
+"""
+input HomeBuildingSocietyInfoInput {
+  """
+  Society name
+  """
+  societyName: String
+
+  """
+  Society number
+  """
+  societyNumber: String
+
+  """
+  Society website
+  """
+  societyURL: String
+}
+
+"""
+Home construction
+"""
+type HomeConstruction {
+  """
+  Date of construction
+  """
+  constructionDate: DateWithGranularity
+
+  """
+  Foundation
+  """
+  foundation: String
+
+  """
+  Foundation
+  """
+  foundationAdditionalText: String
+
+  """
+  Frame material
+  """
+  frame: String
+
+  """
+  Frame material
+  """
+  frameAdditionalText: String
+
+  """
+  Facade
+  """
+  facade: String
+
+  """
+  Facade
+  """
+  facadeAdditionalText: String
+
+  """
+  Roofing
+  """
+  roofing: String
+
+  """
+  Roofing
+  """
+  roofingAdditionalText: String
+
+  """
+  Window type
+  """
+  windowType: String
+
+  """
+  Window type
+  """
+  windowTypeAdditionalText: String
+
+  """
+  Ventilation
+  """
+  ventilationType: String
+
+  """
+  Built by house manufacturer
+  """
+  byManufacturer: Boolean
+
+  """
+  House supplier
+  """
+  company: String
+
+  """
+  House model name
+  """
+  model: String
+}
+
+"""
+Home construction
+"""
+input HomeConstructionInput {
+  """
+  Date of construction
+  """
+  constructionDate: DateWithGranularityInput
+
+  """
+  Foundation
+  """
+  foundation: String
+
+  """
+  Foundation
+  """
+  foundationAdditionalText: String
+
+  """
+  Frame material
+  """
+  frame: String
+
+  """
+  Frame material
+  """
+  frameAdditionalText: String
+
+  """
+  Facade
+  """
+  facade: String
+
+  """
+  Facade
+  """
+  facadeAdditionalText: String
+
+  """
+  Roofing
+  """
+  roofing: String
+
+  """
+  Roofing
+  """
+  roofingAdditionalText: String
+
+  """
+  Window type
+  """
+  windowType: String
+
+  """
+  Window type
+  """
+  windowTypeAdditionalText: String
+
+  """
+  Ventilation
+  """
+  ventilationType: String
+
+  """
+  Built by house manufacturer
+  """
+  byManufacturer: Boolean
+
+  """
+  House supplier
+  """
+  company: String
+
+  """
+  House model name
+  """
+  model: String
+}
+
+input DateWithGranularityInput {
+  date: String
+  granularity: String
+}
+
+"""
+Home electricity
+"""
+type HomeElectricity {
+  """
+  Main fuse size
+  """
+  fuseSize: String
+
+  """
+  Electricity company
+  """
+  electricityCompany: String
+
+  """
+  Electricity company
+  """
+  electricityCompanyAdditionalText: String
+
+  """
+  Box ID
+  """
+  electricityBoxID: String
+
+  """
+  Customer ID
+  """
+  electricityCustomerID: String
+}
+
+"""
+Home electricity
+"""
+input HomeElectricityInput {
+  """
+  Main fuse size
+  """
+  fuseSize: String
+
+  """
+  Electricity company
+  """
+  electricityCompany: String
+
+  """
+  Electricity company
+  """
+  electricityCompanyAdditionalText: String
+
+  """
+  Box ID
+  """
+  electricityBoxID: String
+
+  """
+  Customer ID
+  """
+  electricityCustomerID: String
+}
+
+"""
+Home heating and cooling systems
+"""
+type HomeHeatingAndCooling {
+  """
+  Heating system
+  """
+  heatingSystem: String
+
+  """
+  Heating system
+  """
+  heatingSystemAdditionalText: String
+
+  """
+  Pump type
+  """
+  heatPumpType: String
+
+  """
+  Boiler type
+  """
+  boilerType: String
+
+  """
+  Stove type
+  """
+  stoveType: String
+
+  """
+  Cooling system
+  """
+  coolingSystem: String
+
+  """
+  Cooling system
+  """
+  coolingSystemAdditionalText: String
+}
+
+"""
+Home heating and cooling systems
+"""
+input HomeHeatingAndCoolingInput {
+  """
+  Heating system
+  """
+  heatingSystem: String
+
+  """
+  Heating system
+  """
+  heatingSystemAdditionalText: String
+
+  """
+  Pump type
+  """
+  heatPumpType: String
+
+  """
+  Boiler type
+  """
+  boilerType: String
+
+  """
+  Stove type
+  """
+  stoveType: String
+
+  """
+  Cooling system
+  """
+  coolingSystem: String
+
+  """
+  Cooling system
+  """
+  coolingSystemAdditionalText: String
+}
+
+"""
+Home mortgage info
+"""
+type HomeMortgage {
+  """
+  Mortgage provider
+  """
+  mortgageCompany: String
+
+  """
+  Mortgage provider
+  """
+  mortgageCompanyAdditionalText: String
+
+  """
+  Interest rate
+  """
+  interestRate: String
+
+  """
+  Upcoming refinacing date
+  """
+  refinancingDateUpcoming: String
+
+  """
+  Following refinancing date
+  """
+  refinancingDateFollowing: String
+}
+
+"""
+Home mortgage info
+"""
+input HomeMortgageInput {
+  """
+  Mortgage provider
+  """
+  mortgageCompany: String
+
+  """
+  Mortgage provider
+  """
+  mortgageCompanyAdditionalText: String
+
+  """
+  Interest rate
+  """
+  interestRate: String
+
+  """
+  Upcoming refinacing date
+  """
+  refinancingDateUpcoming: String
+
+  """
+  Following refinancing date
+  """
+  refinancingDateFollowing: String
+}
+
+"""
+Home Property
+"""
+type HomeProperty {
+  """
+  Property designation / Cadaster ID
+  """
+  designation: String
+
+  """
+  Plot size
+  """
+  plotSize: ValueWithUnit
+}
+
+"""
+Home Property
+"""
+input HomePropertyInput {
+  """
+  Property designation / Cadaster ID
+  """
+  designation: String
+
+  """
+  Plot size
+  """
+  plotSize: ValueWithUnitInput
+}
+
+"""
+Value with unit
+"""
+input ValueWithUnitInput {
+  """
+  Value
+  """
+  value: Int
+
+  """
+  Unit of value
+  """
+  unit: String
+}
+
+"""
+Home rooms and floors
+"""
+type HomeRoomsAndFloors {
+  """
+  Living area
+  """
+  livingArea: ValueWithUnit
+
+  """
+  Ancillary area
+  """
+  ancillaryArea: ValueWithUnit
+
+  """
+  Total area
+  """
+  totalArea: ValueWithUnit
+
+  """
+  Floors
+  """
+  floors: Int
+
+  """
+  Basement
+  """
+  basement: Boolean
+
+  """
+  Attic
+  """
+  attic: Boolean
+
+  """
+  Bedrooms
+  """
+  bedrooms: Int
+
+  """
+  Bathrooms
+  """
+  bathrooms: Int
+
+  """
+  Separate WC
+  """
+  separateWC: Int
+
+  """
+  Other rooms (incl kitchen)
+  """
+  otherRooms: Int
+
+  """
+  Total rooms
+  """
+  totalRooms: Int
+}
+
+"""
+Home rooms and floors
+"""
+input HomeRoomsAndFloorsInput {
+  """
+  Living area
+  """
+  livingArea: ValueWithUnitInput
+
+  """
+  Ancillary area
+  """
+  ancillaryArea: ValueWithUnitInput
+
+  """
+  Total area
+  """
+  totalArea: ValueWithUnitInput
+
+  """
+  Floors
+  """
+  floors: Int
+
+  """
+  Basement
+  """
+  basement: Boolean
+
+  """
+  Attic
+  """
+  attic: Boolean
+
+  """
+  Bedrooms
+  """
+  bedrooms: Int
+
+  """
+  Bathrooms
+  """
+  bathrooms: Int
+
+  """
+  Separate WC
+  """
+  separateWC: Int
+
+  """
+  Other rooms (incl kitchen)
+  """
+  otherRooms: Int
+
+  """
+  Total rooms
+  """
+  totalRooms: Int
+}
+
+"""
+Home security and insurance info
+"""
+type HomeSecurityAndInsurance {
+  """
+  Security company
+  """
+  securityCompany: String
+
+  """
+  Security company
+  """
+  securityCompanyAdditionalText: String
+
+  """
+  Insurance company
+  """
+  insuranceCompany: String
+
+  """
+  Insurance company
+  """
+  insuranceCompanyAdditionalText: String
+
+  """
+  Insurance number
+  """
+  insuranceCustomerID: String
+
+  """
+  Insurance package
+  """
+  insurancePackage: String
+}
+
+"""
+Home security and insurance info
+"""
+input HomeSecurityAndInsuranceInput {
+  """
+  Security company
+  """
+  securityCompany: String
+
+  """
+  Security company
+  """
+  securityCompanyAdditionalText: String
+
+  """
+  Insurance company
+  """
+  insuranceCompany: String
+
+  """
+  Insurance company
+  """
+  insuranceCompanyAdditionalText: String
+
+  """
+  Insurance number
+  """
+  insuranceCustomerID: String
+
+  """
+  Insurance package
+  """
+  insurancePackage: String
+}
+
+type HomeSettings {
+  """
+  Used for display & receipt / cost calculation
+  """
+  currency: String
+
+  """
+  Units and measurments
+  """
+  unit: String
+
+  """
+  Will be used to time / send Push notifs
+  """
+  timeZone: String
+}
+
+input HomeSettingsInput {
+  """
+  Used for display & receipt / cost calculation
+  """
+  currency: String
+
+  """
+  Units and measurments
+  """
+  unit: String
+
+  """
+  Will be used to time / send Push notifs
+  """
+  timeZone: String
+}
+
+"""
+Home valuation info
+"""
+input HomeValuationInput {
+  """
+  Purchase price
+  """
+  purchasePrice: ValueWithUnitInput
+
+  """
+  Purchase date
+  """
+  purchaseDate: DateWithGranularityInput
+}
+
+"""
+Home home water and sewer systems
+"""
+type HomeWaterAndSewer {
+  """
+  Water source
+  """
+  waterSource: String
+
+  """
+  Water source
+  """
+  waterSourceAdditionalText: String
+
+  """
+  Water supplier
+  """
+  waterSupplier: String
+
+  """
+  Water hardness
+  """
+  waterHardness: ValueWithUnit
+
+  """
+  Sewage type
+  """
+  sewage: String
+
+  """
+  Sewage type
+  """
+  sewageAdditionalText: String
+}
+
+"""
+Home home water and sewer systems
+"""
+input HomeWaterAndSewerInput {
+  """
+  Water source
+  """
+  waterSource: String
+
+  """
+  Water source
+  """
+  waterSourceAdditionalText: String
+
+  """
+  Water supplier
+  """
+  waterSupplier: String
+
+  """
+  Water hardness
+  """
+  waterHardness: ValueWithUnitInput
+
+  """
+  Sewage type
+  """
+  sewage: String
+
+  """
+  Sewage type
+  """
+  sewageAdditionalText: String
+}
+
+type Queries {
+  user: User
+  card(id: ID): Card
+  cards(homeId: ID, limit: Float, offset: Float): Cards
+  home(id: ID): Home
+  homes: [Home]
+
+  """
+  Single Pion
+  """
+  pion(id: ID): Pion
+  task(id: ID, payload: JSON): Task
+  tasksLists(homeId: ID): [TasksList]
+}
+
+type Mutations {
+  authorize(clientKey: ID!): Authorization
+  addToHomeImages(home: ID, image: UploadType): Home
+  refreshToken(accessToken: String!, refreshToken: String!): Authorization
+  createHome(
+    title: String
+    image: UploadType
+    addressLine1: String
+    addressLine2: String
+    zipCode: String
+    city: String
+    lat: String
+    lon: String
+    country: String
+    countryISO: String
+    municipality: String
+    propertyName: String
+    buildingSociety: String
+    type: JSON
+    ownershipType: String
+    peopleInHome: Boolean
+    ownershipTiming: JSON
+    apartmentNumber: Int
+    otherProperties: JSON
+  ): Home
+  createCard(title: String, home: ID, image: UploadType, tags: JSON): Card
+  createPion(
+    home: ID
+    cards: [ID]
+    type: PionTypes
+
+    """
+    \"""
+    Pion payload per type:
+
+              brand: {
+                title       GraphQLString
+                brand       GraphQLString
+                model       GraphQLString
+                productInfo GraphQLString
+                serial      GraphQLString
+                file        UploadType
+              }
+
+              note: {
+                title       GraphQLString
+                content     GraphQLString
+                files       [UploadType]
+              }
+
+              url: {
+                title       GraphQLString
+                url         GraphQLString
+                urlTitle    GraphQLString
+                preview     GraphQLString
+                favicon     GraphQLString
+              }
+
+              pdf: {
+                title         GraphQLString
+                documentName  GraphQLString
+                file          UploadType
+              }
+
+              photo: {
+                title       GraphQLString
+                files       [UploadType]
+              }
+
+    \"""
+    """
+    payload: JSON
+  ): Pion
+  createTask(homeId: ID, cards: JSON, payload: JSON): Task
+  createTasksList(home: ID, payload: JSON): TasksList
+  updateCard(
+    id: ID
+    title: String
+    home: ID
+    image: UploadType
+    tags: JSON
+  ): Card
+  updateHome(
+    id: ID
+    title: String
+    image: UploadType
+    addressLine1: String
+    addressLine2: String
+    zipCode: String
+    city: String
+    lat: String
+    lon: String
+    language: String
+    country: String
+    countryISO: String
+    municipality: String
+    propertyName: String
+    buildingSociety: String
+    tags: JSON
+    type: JSON
+    ownershipType: String
+    peopleInHome: Boolean
+    ownershipTiming: JSON
+    apartmentNumber: String
+    otherProperties: JSON
+    settings: HomeSettingsInput
+    basicInfo: HomeBasicInfoInput
+    property: HomePropertyInput
+    buildingSocietyInfo: HomeBuildingSocietyInfoInput
+    roomsAndFloors: HomeRoomsAndFloorsInput
+    construction: HomeConstructionInput
+    electricity: HomeElectricityInput
+    heatingAndCooling: HomeHeatingAndCoolingInput
+    waterAndSewer: HomeWaterAndSewerInput
+    securityAndInsurance: HomeSecurityAndInsuranceInput
+    mortgage: HomeMortgageInput
+    valuation: [HomeValuationInput]
+  ): Home
+  updatePion(
+    id: ID
+    cards: [ID]
+
+    """
+    \"""
+    Pion payload per type:
+
+              brand: {
+                title       GraphQLString
+                brand       GraphQLString
+                model       GraphQLString
+                productInfo GraphQLString
+                serial      GraphQLString
+                file        UploadType
+              }
+
+              note: {
+                title       GraphQLString
+                content     GraphQLString
+                files       [UploadType]
+              }
+
+              url: {
+                title       GraphQLString
+                url         GraphQLString
+                urlTitle    GraphQLString
+                preview     GraphQLString
+                favicon     GraphQLString
+              }
+
+              pdf: {
+                title         GraphQLString
+                documentName  GraphQLString
+                file          UploadType
+              }
+
+              photo: {
+                title       GraphQLString
+                files       [UploadType]
+              }
+
+    \"""
+    """
+    payload: JSON
+  ): Pion
+  updateTask(id: ID, homeId: ID, cards: JSON, payload: JSON): Task
+  updateTasksList(id: ID, home: ID, payload: JSON): TasksList
+  deleteHome(id: ID): Home
+  deleteCard(id: ID): Card
+  deleteFromHomeImages(home: ID, image: ID): Home
+  deletePion(id: ID): Pion
+  deleteTask(id: ID): Pion
+  deleteTasksList(id: ID, deleteAllTasks: Boolean): Card
+  addUserToHome(id: ID, email: String): Home
+  removeUserFromHome(id: ID, userId: ID): Home
+  reorderHomeImages(homeId: ID, imageIds: [ID]): Boolean
+  reorderTask(id: ID, insertAfter: ID, tasksListId: ID): Task
+}
+
+input UploadType {
+  """
+  Name of upload
+  """
+  name: String
+
+  """
+  Type of upload
+  """
+  type: String
+
+  """
+  Size of file
+  """
+  size: Int
+
+  """
+  Path of file
+  """
+  path: String
+}
