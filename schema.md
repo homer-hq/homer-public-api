@@ -1,5 +1,4 @@
-
-# Schema Types
+# Homer Public API
 
 <details>
   <summary><strong>Table of Contents</strong></summary>
@@ -4740,4 +4739,3 @@ Updated date
 </tr>
 </tbody>
 </table>
-Done in 0.44s.
