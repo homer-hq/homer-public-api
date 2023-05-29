@@ -3,4 +3,4 @@ Public API
 
 ## GraphQL Schema
 
-Explore the API using the [Schema](./schema.gql)
+Explore the API using the [docs](./schema.md) or [directly](./schema.gql)
